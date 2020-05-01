@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,6 +19,7 @@ import dao.OrdenDAO;
 import modelo.Alimento;
 import modelo.Categoria;
 import modelo.Orden;
+import modelo.Repartidor;
 
 
 @WebServlet("/muestra_orden")
@@ -51,16 +53,22 @@ public class MuestraOrden extends HttpServlet {
 				index(request, response);
 				break;
 			case "verOrdenes":
-				VerOrdenes(request, response);
+				verOrdenes(request, response);
 				break;
 			case "verOrdenesAceptadas":
-				OrdenesAceptadas(request, response);
+				verOrdenesAceptadas(request, response);
 				break;
 			case "verDetalles":
-				Detalles(request, response);
+				verDetalles(request, response);
 				break;
 			case "cambiarEstado":
-				CambiarEstado(request, response);
+				cambiarEstado(request, response);
+				break;
+			case "aviso":
+				aviso(request, response);
+				break;
+			case "asignaOrden":
+				asignaOrden(request, response);
 				break;
 			default:
 				break;
@@ -81,7 +89,7 @@ public class MuestraOrden extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void VerOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	private void verOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/ordenes.jsp");
 		System.out.println("dispatcher ready..");
 		List<Orden> listaordenes= ordenDAO.listarOrdenes();
@@ -90,16 +98,26 @@ public class MuestraOrden extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void OrdenesAceptadas(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	private void asignaOrden(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		int id_ord = Integer.parseInt(request.getParameter("id_orden"));
-		//ordenDAO.asignarOrden(repartidor, id_ord); falta asignar al repartidor
+		Repartidor repartidor = ordenDAO.getRepartidor();
+		ordenDAO.asignarOrden(repartidor, id_ord); 
+		String mensaje = "Orden asignada";
+		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/asigna.jsp");
+		request.setAttribute("mensaje", mensaje);
+		dispatcher.forward(request, response);
+	}
+	
+	private void verOrdenesAceptadas(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		int id_ord = Integer.parseInt(request.getParameter("id_orden"));
+		Repartidor repartidor = ordenDAO.getRepartidor();
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/ordenesAceptadas.jsp");
-		List<Orden> listaordenesacept= ordenDAO.listarOrdenesAceptadas(repartidor, id_ord);//falta asignar el repartidor
+		List<Orden> listaordenesacept= ordenDAO.listarOrdenesAceptadas(repartidor, id_ord);
 		request.setAttribute("lista", listaordenesacept);
 		dispatcher.forward(request, response);
 	}
 	
-	private void Detalles(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	private void verDetalles(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		int id_ord = Integer.parseInt(request.getParameter("id_orden"));
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/detalles.jsp");
 		List<Alimento> alimentos= ordenDAO.listaAlimentos(id_ord);
@@ -107,13 +125,36 @@ public class MuestraOrden extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void CambiarEstado(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+	private void cambiarEstado(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		int id_ord = Integer.parseInt(request.getParameter("id_orden"));
+		String estado = ordenDAO.verEstado(id_ord);
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/estados.jsp");
+		System.out.println("dispatcher ready..");
+		List<String> estados = new ArrayList<String>();
+		if(estado.equals("PREPARANDO")) {
+			estados.add("LISTA");
+			estados.add("EN CAMINO");
+			estados.add("ENTREGADA");
+			estados.add("NO ENTREGADA");
+		}else if(estado.equals("LISTA")) {
+			estados.add("EN CAMINO");
+			estados.add("ENTREGADA");
+			estados.add("NO ENTREGADA");
+		}else if(estado.equals("EN CAMINO")) {
+			estados.add("ENTREGADA");
+			estados.add("NO ENTREGADA");
+		}
+		request.setAttribute("lista", estados);
+		System.out.println("regreso..");
 		dispatcher.forward(request, response);
 	}
-
 	
-	
+	private void aviso(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		String aviso = "Estado cambiado";
+		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Ordenes/aviso.jsp");
+		request.setAttribute("mensaje", aviso);
+		dispatcher.forward(request, response);
+	}
 	
 }
 

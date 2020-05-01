@@ -20,6 +20,7 @@ public class OrdenDAO {
 	private Connection connection;
 	
 	Cliente cliente;
+	Repartidor repartidor;
 	
 
 	public OrdenDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
@@ -99,6 +100,14 @@ public class OrdenDAO {
 		cliente = c;
 	}
 	
+	public void obtenRepartidor(Repartidor r) {
+		repartidor = r;
+	}
+	
+	public Repartidor getRepartidor() {
+		return repartidor;
+	}
+	
 	public boolean asignarOrden(Repartidor repartidor,int id_orden) throws SQLException {
 		boolean actualizar = false;
 		String sql = "UPDATE orden SET repartidor= ? WHERE id_orden = ?";
@@ -169,5 +178,19 @@ public class OrdenDAO {
 		con.desconectar();
 		return listaAlimento;
 	}
+	
+	public String verEstado(int orden) throws SQLException {
+		String sql = "SELECT estado_orden FROM orden WHERE id_orden ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, orden);
+		ResultSet resulSet = statement.executeQuery(sql);
+		String estado = resulSet.getString("estado_orden");
+		con.desconectar();
+		return estado;
+		
+	}
+	
 }
 	
