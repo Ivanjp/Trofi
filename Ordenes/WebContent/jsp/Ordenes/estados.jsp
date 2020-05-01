@@ -1,4 +1,4 @@
-%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -9,27 +9,23 @@
 <title>Menu - Trofi</title>
 </head>
 <body>
-	<h1>Ordenes</h1>
+	<h1>Estados Disponibles</h1>
 	
 	<table border="1" width="100%">
 		<tr>
-		 <td> ID</td>
-		 <td> DIRECCION DE ENTREGA </td>
-		 <td> DETALLES </td>
-		 <td>ACCIONES</td>
+		 <td> ESTADOS</td>
+		 <td> CAMBIAR </td>
 		</tr>
-		<c:forEach var="orden" items="${lista}">
+		<c:forEach var="estados" items="${lista}">
 			<tr>
-				<td><c:out value="${orden.id_orden}"/></td>
-				<td><c:out value="${orden.direccion_cliente}"/></td>
-				<td><a href="muestra_orden?action=Detalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
-				<td><a href="muestra_orden?action=OrdenesAceptadas&id_orden=<c:out value="${orden.id_orden}" />">Tomar Orden</a></td>
+				<td><c:out value="${estados}"/></td>
+				<td><a href="muestra_orden?action=aviso&estados=<c:out value="${estados}" />">Aceptar</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<table>
 		<tr>
-			<td><a href="muestra_orden?action=verOrdenesAceptadas" >Ver Ordenes Aceptadas</a> </td>
+			<td><a href="muestra_orden?action=verOrdenesAceptadas" >Ordenes Aceptadas </a> </td>
 		</tr>
 	</table>
 	

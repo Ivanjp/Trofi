@@ -22,8 +22,8 @@
 			<tr>
 				<td><c:out value="${orden.id_orden}"/></td>
 				<td><c:out value="${orden.direccion_cliente}"/></td>
-				<td><a href="muestra_orden?action=Detalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
-				<td><a href="muestra_orden?action=OrdenesAceptadas&id_orden=<c:out value="${orden.id_orden}" />">Tomar Orden</a></td>
+				<td><a href="muestra_orden?action=verDetalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
+				<td><a href="muestra_orden?action=asignaOrden&id_orden=<c:out value="${orden.id_orden}" />">Tomar Orden</a></td>
 			</tr>
 		</c:forEach>
 	</table>

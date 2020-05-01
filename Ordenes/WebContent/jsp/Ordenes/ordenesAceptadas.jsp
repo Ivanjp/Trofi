@@ -16,16 +16,16 @@
 		 <td> ID</td>
 		 <td> DIRECCION DE ENTREGA </td>
 		 <td> DETALLES </td>
-		 <td> ESTADO DEL ORDEN </td>
+		 <td> ESTADO DE LA ORDEN </td>
 		 <td>ACCIONES</td>
 		</tr>
 		<c:forEach var="orden" items="${lista}">
 			<tr>
 				<td><c:out value="${orden.id_orden}"/></td>
 				<td><c:out value="${orden.direccion_cliente}"/></td>
-				<td><a href="muestra_orden?action=Detalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
+				<td><a href="muestra_orden?action=verDetalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
 				<td><c:out value="${orden.estado_orden}"/></td>
-				<td><a href="muestra_orden?action=CambiarEstado&id_orden=<c:out value="${orden.id_orden}" />">Cambiar Estado</a></td>
+				<td><a href="muestra_orden?action=cambiarEstado&id_orden=<c:out value="${orden.id_orden}" />">Cambiar Estado</a></td>
 			</tr>
 		</c:forEach>
 	</table>

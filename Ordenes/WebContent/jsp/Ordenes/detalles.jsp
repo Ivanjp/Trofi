@@ -27,8 +27,8 @@
 	</table>
 	<table>
 		<tr>
-			<td><a href="muestra_orden?action=VerOrdenes" >Ver Ordenes </a> </td>
-			<td><a href="muestra_orden?action=OrdenesAceptadas" >Ver OrdenesAceptadas </a> </td>
+			<td><a href="muestra_orden?action=verOrdenes" >Ver Ordenes </a> </td>
+			<td><a href="muestra_orden?action=verOrdenesAceptadas" >Ver Ordenes Aceptadas </a> </td>
 		</tr>
 	</table>
 	
