@@ -2,7 +2,7 @@ package modelo;
 
 /**
  * Una clase que nos ayuda a modelar un repartidor
- * @author Quintero Villeda Erik
+ * @author Perez Perez Jorge Ivan
  */
 public class Repartidor {
     private String nombre; //Nombre del repartidor
