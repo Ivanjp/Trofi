@@ -25,7 +25,7 @@ import modelo.Conexion;
 
 /**
  * Una clase que nos ayuda a obtener informacion de los repartidores en la base de datos
- * @author Quintero Villeda Erik
+ * @author Perez Perez Jorge Ivan
  */
 public class RepartidorDAO {
 	private Conexion con; //Objeto conexion para conectar la base de datos
