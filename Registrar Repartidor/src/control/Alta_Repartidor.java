@@ -1,10 +1,10 @@
-package control;
+package controlador;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+
 import java.sql.SQLException;
-import java.util.Random;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,12 +16,19 @@ import javax.servlet.http.HttpServletResponse;
 import dao.RepartidorDAO;
 import modelo.Repartidor;
 
+/**
+* Clase que se encarga de hacer las llamadas a los metodos de RepartidorDAO y manipular las vistas.
+* @version 1.3 5/5/2020
+* @author Perez Perez Jorge Ivan
+*/
 @WebServlet("/alta_repartidor")
 public class Alta_Repartidor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	RepartidorDAO repartidorDAO;
+	RepartidorDAO repartidorDAO;//Se crea un objeto RepartidorDAO
 
-	
+	/**
+	* Inicializa la conexion a la base de datos para el Repartidor
+	*/
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
 		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
@@ -37,6 +44,11 @@ public class Alta_Repartidor extends HttpServlet {
 		super();
 	}
 	
+	/**
+	* Metodo que se encarga de recibir las peticiones del servidor y mostrar la vista que se pide
+	* @param HttpServletRequest request
+	* @param HttpServletResponse response
+	*/
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Hola ...");
@@ -63,40 +75,45 @@ public class Alta_Repartidor extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Hola ....");
 		doGet(request, response);
 	}
 	
+	/**
+	* Muestra la vista de la pagina inicial
+	*/
 	private void index(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		RequestDispatcher dispatcher= request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}
 	
+	/**
+	* Metodo que muestra la vista para registrar un repartidor
+	*/
 	private void nuevaCuenta(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/crearRepartidor.jsp");
+		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Administrador/crearRepartidor.jsp");
 		dispatcher.forward(request, response);
 	}
 	
+	/**
+	* Metodo que registra un repartidor en la base de datos y regresa la vista del menu del administrador.
+	*/
 	private void darDeAlta(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException, NoSuchAlgorithmException {
-		String[] symbols = {"0", "1", "2", "3","4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f","g","h","i","j","k","l","m","n","o","p","q"
-		        ,"r","s","t","u","v","w","x","y","z","A", "B", "C", "D", "E", "F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-		        int length = 10;
-		        Random random = SecureRandom.getInstanceStrong();
-		        StringBuilder sb = new StringBuilder(length);
-		        for (int i = 0; i < length; i++) {
-		            int indexRandom = random.nextInt(symbols.length);
-		            sb.append(symbols[indexRandom]);
-		        }
-		        String password = sb.toString();
-		Repartidor repartidor = new Repartidor(request.getParameter("nombre"), request.getParameter("a_paterno"), request.getParameter("a_materno"), request.getParameter("correo_e"), password);
-		System.out.println(password);
+		String password = repartidorDAO.mandaContrasena(request.getParameter("correo_e"), request.getParameter("nombre"), request.getParameter("a_paterno"), request.getParameter("a_materno"));
+		System.out.println(password);        
+		Repartidor repartidor = new Repartidor(request.getParameter("correo_e"), request.getParameter("nombre"), request.getParameter("a_paterno"), request.getParameter("a_materno"), password);
+		
 		repartidorDAO.agregarCuenta(repartidor);
+		RequestDispatcher dispatcher= request.getRequestDispatcher("/jsp/Administrador/menu.jsp");
+		dispatcher.forward(request, response);
 	}
 	
 	
 	
 }
-
-

@@ -13,6 +13,7 @@
 	
 	<table border="1" width="100%">
 		<tr>
+		 <td> CLIENTE</td>
 		 <td> ID</td>
 		 <td> DIRECCION DE ENTREGA </td>
 		 <td> DETALLES </td>
@@ -21,17 +22,19 @@
 		</tr>
 		<c:forEach var="orden" items="${lista}">
 			<tr>
+				<td><c:out value="${orden.correo_cl}"/></td>
 				<td><c:out value="${orden.id_orden}"/></td>
 				<td><c:out value="${orden.direccion_cliente}"/></td>
-				<td><a href="muestra_orden?action=verDetalles&id_orden=<c:out value="${orden.id_orden}" />">Ver Detalles</a></td>
+				<td><a href="muestra_orden?action=verDetalles&id_orden=<c:out value="${orden.id_orden}" />&correoCliente=<c:out value="${orden.correo_cl}" />">Ver Detalles</a></td>
 				<td><c:out value="${orden.estado_orden}"/></td>
-				<td><a href="muestra_orden?action=cambiarEstado&id_orden=<c:out value="${orden.id_orden}" />">Cambiar Estado</a></td>
+				<td><a href="muestra_orden?action=cambiarEstado&id_orden=<c:out value="${orden.id_orden}" />&correoCliente=<c:out value="${orden.correo_cl}" />">Cambiar Estado</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<table>
 		<tr>
 			<td><a href="muestra_orden?action=verOrdenes" >Ver Ordenes </a> </td>
+			<td><a href="muestra_orden?action=cerrarSesion" >Cerrar Sesión</a> </td>
 		</tr>
 	</table>
 	

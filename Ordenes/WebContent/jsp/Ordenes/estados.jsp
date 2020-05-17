@@ -1,3 +1,4 @@
+  
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
@@ -19,7 +20,7 @@
 		<c:forEach var="estados" items="${lista}">
 			<tr>
 				<td><c:out value="${estados}"/></td>
-				<td><a href="muestra_orden?action=aviso&estados=<c:out value="${estados}" />">Aceptar</a></td>
+				<td><a href="muestra_orden?action=aviso&estado=<c:out value="${estados}" />&id_orden=<c:out value="${id_orden}" />&correoCliente=<c:out value="${correoCliente}" />">Aceptar</a></td>
 			</tr>
 		</c:forEach>
 	</table>

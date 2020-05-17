@@ -15,7 +15,7 @@
 			<td><c:out value="${ mensaje }"/></td>
 		</tr>
 		<tr>
-			<td><a href="muestra_orden?action=verOrdenesAceptadas=<c:out/>">Aceptar</a> </td>
+			<td><a href="muestra_orden?action=verOrdenesAceptadas">Aceptar</a> </td>
 		</tr>
 	</table>
 </body>

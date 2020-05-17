@@ -13,12 +13,14 @@
 	
 	<table border="1" width="100%">
 		<tr>
+		 <td> CLIENTE</td>
 		 <td> NOMBRE</td>
 		 <td> DESCRIPCION </td>
 		 <td> COSTO </td>
 		</tr>
 		<c:forEach var="alimento" items="${lista}">
 			<tr>
+				<td><c:out value="${cliente}"/></td>
 				<td><c:out value="${alimento.nombre}"/></td>
 				<td><c:out value="${alimento.descripcion}"/></td>
 				<td><c:out value="${alimento.costo}"/></td>

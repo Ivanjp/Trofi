@@ -6,17 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Menu - Trofi</title>
+<title>Administarador - Trofi</title>
 </head>
 <body>
-	<h1>Ordenes</h1>
+	<h1>Ordenes </h1>
 	
 	<table border="1" width="100%">
 		<tr>
 		 <td> CLIENTE</td>
 		 <td> ID</td>
 		 <td> DIRECCION DE ENTREGA </td>
-		 <td> DETALLES </td>
+		 <td> ESTADO DE LA ORDEN </td>
 		 <td>ACCIONES</td>
 		</tr>
 		<c:forEach var="orden" items="${lista}">
@@ -24,15 +24,14 @@
 				<td><c:out value="${orden.correo_cl}"/></td>
 				<td><c:out value="${orden.id_orden}"/></td>
 				<td><c:out value="${orden.direccion_cliente}"/></td>
-				<td><a href="muestra_orden?action=verDetalles&id_orden=<c:out value="${orden.id_orden}" />&correoCliente=<c:out value="${orden.correo_cl}" />">Ver Detalles</a></td>
-				<td><a href="muestra_orden?action=asignaOrden&id_orden=<c:out value="${orden.id_orden}" />&correoCliente=<c:out value="${orden.correo_cl}" />">Tomar Orden</a></td>
+				<td><c:out value="${orden.estado_orden}"/></td>
+				<td><a href="menu?action=cambiarEstado&id_orden=<c:out value="${orden.id_orden}" />&correoCliente=<c:out value="${orden.correo_cl}" />">Cambiar Estado</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 	<table>
 		<tr>
-			<td><a href="muestra_orden?action=verOrdenesAceptadas" >Ver Ordenes Aceptadas</a> </td>
-			<td><a href="muestra_orden?action=cerrarSesion" >Cerrar Sesión</a> </td>
+			<td><a href="menu?action=index" >Volver a menu</a> </td>
 		</tr>
 	</table>
 	
